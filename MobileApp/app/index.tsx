@@ -28,6 +28,9 @@ export default function Index() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>X: {Number(radToDeg(x).toFixed(2))}</Text>
+      <Text>Y: {Number(radToDeg(y).toFixed(2))}</Text>
+      <Text>Z: {Number(radToDeg(z).toFixed(2))}</Text>
       <Text>Pitch: {pitch}°</Text>
       <Text>Roll: {roll}°</Text>
     </View>
