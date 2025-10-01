@@ -1,18 +1,20 @@
-from flask import Flask
+from flask import Flask, jsonify, request
+
+dados = []
+
 
 # Aqui cria-se o servidor web via Flask
 app = Flask(__name__)
 
-# Aqui define-se uma rota simples, que retorna "Hello, World!" quando acessada
-# No navegador, a rota é acessada via http://localhost:5000/
-@app.route('/')
-def hello():
-    return "Hello, World!"
+@app.route('/enviar', methods=['POST'])
+def receber_dados():
+    conteudo = request.json
+    dados.append(conteudo)
+    return jsonify({"status": "OK", "Mensagem": "Dados recebidos com sucesso!"})
 
-# Já essa rota é acessada via http://localhost:5000/sobre
-@app.route('/sobre')
-def sobre():
-    return "Esta é a página sobre."
+@app.route('/listar', methods=['GET'])
+def listar_dados():
+    return jsonify(dados)
 
 # __name__ é uma variável especial em Python que indica se o script está sendo executado diretamente ou importado como um módulo.
 # Se o script estiver sendo executado diretamente, o servidor Flask será iniciado.
