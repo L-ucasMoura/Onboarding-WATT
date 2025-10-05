@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import table_functions
 
 dados = []
 
@@ -16,7 +17,12 @@ def receber_dados():
 def listar_dados():
     return jsonify(dados)
 
+@app.route('/gotodb', methods=["POST"])
+def insert_in_table():
+  data = request.get_json()
+  return table_functions.to_the_table(data)
+
 # __name__ é uma variável especial em Python que indica se o script está sendo executado diretamente ou importado como um módulo.
 # Se o script estiver sendo executado diretamente, o servidor Flask será iniciado.
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+  app.run(host='0.0.0.0', port=5000)
