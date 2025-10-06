@@ -14,7 +14,7 @@ export default function Index() {
       return () => subscription.remove();
   }, []);
 
-  Accelerometer.setUpdateInterval(1000);
+  Accelerometer.setUpdateInterval(100);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
