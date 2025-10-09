@@ -53,3 +53,15 @@ def to_the_table(data):
     buffer.clear()
 
   return jsonify({"status": "ok", "Message": f"Buffer em {len(buffer)}"})
+
+def send_to_esp(direction):
+  if direction == 'UP':
+    return 23
+  elif direction == 'DOWN':
+    return 22
+  elif direction == 'LEFT':
+    return 4
+  elif direction == 'RIGHT':
+    return 2
+  else:
+    return 0
