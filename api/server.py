@@ -3,7 +3,7 @@ import table_functions
 import atexit
 import serial, requests
 
-esp = serial.Serial('COM10', 9600, timeout=1)
+#esp = serial.Serial('COM10', 9600, timeout=1)
 buffer = []
 destinations = ['http://10.7.240.9:5000/server/toEsp']
 
