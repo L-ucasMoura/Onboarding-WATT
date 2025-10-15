@@ -44,3 +44,6 @@ app-example
 
 # venv python
 api/venv
+
+# Rascunhos
+api/test.py
