@@ -1,29 +1,47 @@
 import { Accelerometer } from "expo-sensors";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { enviarDado } from "./api";
-import getDirection from "./getAngle";
+import { toEsp, toTable } from "./api";
+import {getDirection} from "./appFunctions";
 
 export default function Index() {
   const [{ x, y, z }, setData] = useState({ x: 0, y: 0, z: 0 });
+  const dataRef = useRef({ x: 0, y: 0, z: 0 });
 
   const angle = (x, y) => {
     const a = Math.atan2(y, -x) * (180 / Math.PI);
     return (a + 360) % 360;
   };
 
+  // Atualiza o estado e envia pra ESP em tempo real
   useEffect(() => {
     const subscription = Accelerometer.addListener((dados) => {
       setData(dados);
+      dataRef.current = dados; // <-- mantém os valores mais recentes
+
       const direction = getDirection(angle(dados.x, dados.y));
-      const angulo = angle(dados.y, -dados.x);
-      enviarDado(angulo, direction);
+      const angulo = angle(dados.x, dados.y);
+      toEsp(angulo, direction);
     });
 
     Accelerometer.setUpdateInterval(100);
     return () => subscription.remove();
   }, []);
+
+  // Envia pro banco a cada 1 segundo
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { x, y, z } = dataRef.current;
+      const direction = getDirection(angle(x, y));
+      const angulo = angle(x, y);
+
+      console.log("⏱ Enviando pro banco...", { x, y, z, angulo, direction });
+      toTable(x, y, z, angulo, direction);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []); // <-- executa uma única vez
 
   const direction = getDirection(angle(x, y));
 

@@ -6,7 +6,7 @@
 //pitch: Inclinação frente-trás
 //roll: Inclinação direita-esquerda
 
-export default function getDirection(angle: number){
+export function getDirection(angle: number){
   if (angle >= 45 && angle < 135){
     //console.log("Up")
     return "UP"
@@ -24,3 +24,5 @@ export default function getDirection(angle: number){
     return 'RIGHT'
   }
 }
+
+
