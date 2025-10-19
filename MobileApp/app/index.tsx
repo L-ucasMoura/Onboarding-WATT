@@ -39,15 +39,16 @@ export default function Index() {
       const direction = getDirection(angle(x, y));
       const angulo = angle(x, y);
 
-      console.log("⏱ Enviando pro banco...", { x, y, z, angulo, direction });
-      toTable(x, y, z, angulo, direction);
-
-      if(count % 3 === 0){
-        console.log('Enviando pra ESP')
-        toEsp(angulo, direction)
+      
+      toEsp(angulo, direction)
+      
+      if(count % 4 === 0){
+        //console.log('Enviando pra ESP')
+        console.log("⏱ Enviando pro banco...", { x, y, z, angulo, direction });
+        toTable(x, y, z, angulo, direction);
       }
       count += 1;
-    }, 1000);
+    }, 250);
 
     return () => clearInterval(interval);
   }, []);

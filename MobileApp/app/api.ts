@@ -5,7 +5,7 @@ const ngrokIP = 'https://dusty-nonfeasible-marisha.ngrok-free.dev'
 
 export const toEsp = async (angle:number, direction:string) => {
   try{
-    const response = await fetch(`${IP}/server/toEsp`,{
+    const response = await fetch(`${ngrokIP}/server/toEsp`,{
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const toEsp = async (angle:number, direction:string) => {
 
 export const toTable = async (x:number, y:number, z:number, angle:number, direction:string) => {
   try{
-    const response = await fetch(`${IP}/server/gotodb`,{
+    const response = await fetch(`${ngrokIP}/server/gotodb`,{
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
