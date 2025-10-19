@@ -6,7 +6,9 @@ import { toEsp, toTable } from "./api";
 import {getDirection} from "./appFunctions";
 
 export default function Index() {
+  
   const [{ x, y, z }, setData] = useState({ x: 0, y: 0, z: 0 });
+  
   const dataRef = useRef({ x: 0, y: 0, z: 0 });
 
   const angle = (x, y) => {
@@ -22,7 +24,7 @@ export default function Index() {
 
       const direction = getDirection(angle(dados.x, dados.y));
       const angulo = angle(dados.x, dados.y);
-      toEsp(angulo, direction);
+      //toEsp(angulo, direction);
     });
 
     Accelerometer.setUpdateInterval(100);
@@ -30,6 +32,7 @@ export default function Index() {
   }, []);
 
   // Envia pro banco a cada 1 segundo
+  let count = 0;
   useEffect(() => {
     const interval = setInterval(() => {
       const { x, y, z } = dataRef.current;
@@ -38,10 +41,16 @@ export default function Index() {
 
       console.log("⏱ Enviando pro banco...", { x, y, z, angulo, direction });
       toTable(x, y, z, angulo, direction);
+
+      if(count % 3 === 0){
+        console.log('Enviando pra ESP')
+        toEsp(angulo, direction)
+      }
+      count += 1;
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []); // <-- executa uma única vez
+  }, []);
 
   const direction = getDirection(angle(x, y));
 

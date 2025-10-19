@@ -1,10 +1,11 @@
 
 
-const IP = "10.7.240.9"
+const IP = "http://10.7.240.9:5000"
+const ngrokIP = 'https://dusty-nonfeasible-marisha.ngrok-free.dev'
 
 export const toEsp = async (angle:number, direction:string) => {
   try{
-    const response = await fetch(`http://${IP}:5000/server/toEsp`,{
+    const response = await fetch(`${IP}/server/toEsp`,{
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +24,7 @@ export const toEsp = async (angle:number, direction:string) => {
 
 export const toTable = async (x:number, y:number, z:number, angle:number, direction:string) => {
   try{
-    const response = await fetch(`http://${IP}:5000/server/gotodb`,{
+    const response = await fetch(`${IP}/server/gotodb`,{
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
