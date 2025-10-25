@@ -1,5 +1,5 @@
 
-
+//const IP = "http://192.168.1.5:5000"
 const IP = "http://10.7.240.9:5000"
 const ngrokIP = 'https://dusty-nonfeasible-marisha.ngrok-free.dev'
 

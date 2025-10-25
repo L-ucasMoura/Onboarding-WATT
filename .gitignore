@@ -48,3 +48,6 @@ api/venv
 # Rascunhos
 api/test.py
 api/test.js
+
+# Banco de dados
+api/dados.db

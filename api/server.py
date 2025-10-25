@@ -4,7 +4,7 @@ import atexit, threading
 import serial, time
 
 
-esp = None  # variável global para a conexão
+esp = None
 esp_lock = threading.Lock()  # para evitar conflitos entre threads
 
 def manage_esp_connection():
@@ -23,7 +23,6 @@ def manage_esp_connection():
             # ESP conectada, espera um pouco antes de checar de novo
             time.sleep(1)
 
-# inicia a thread
 threading.Thread(target=manage_esp_connection, daemon=True).start()
 
 # Aqui cria-se o servidor web via Flask
@@ -46,10 +45,12 @@ def go_to_esp():
     with esp_lock:
         if esp and esp.is_open:
             direction = request.get_json()['direction']
+            angle = request.get_json()['angle']
+            print(f'Ângulo: {angle}, Tipo: {type(angle)}')
             pino = table_functions.send_to_esp(direction)
             try:
-                esp.write(f'{pino}\n'.encode())
-                return jsonify({'status': 'ok', 'direção': direction, 'pino': pino})
+                esp.write(f'{angle}\n'.encode())
+                return jsonify({'status': 'ok', 'direção': direction, 'angulo': angle})
             except serial.SerialException:
                 # ESP caiu no meio da operação
                 esp.close()  # fecha a conexão antiga
